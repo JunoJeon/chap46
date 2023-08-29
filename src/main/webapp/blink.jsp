@@ -1,3 +1,4 @@
+<%@page import="javax.print.attribute.standard.PagesPerMinuteColor"%>
 <%@page import="util.Alpha"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -124,17 +125,13 @@ window.onload = function() {
 </script>
 </head>
 <body>
-<h1>Table Tag 연습</h1>
+<h1>Alpha Generator</h1>
 <button> > Start < </button>
 <select>
-	<%
-		for(var i=0; i<26; i++) {
-			
-	%>
-		<option><%=(char)('A' + i)%></option>
-	<%
-		}
-	%>
+	<c:forEach var="i" begin="0" end="25">
+		<c:set var="ch" value = "<%=(char)((Integer)pageContext.getAttribute(\"i\") + 'A') %>"/>
+		<option>${ch}</option>
+	</c:forEach>
 </select>
 <button> > Stop < </button>
 <button>show</button>
@@ -142,23 +139,11 @@ window.onload = function() {
 <hr>
 <h2></h2>
 <hr>
-<c:if test = "${empty param.line}">
-	<c:set var="line" value = "20"/>
-</c:if>
-<c:if test = "${not empty param.line}">
-	<c:set var="line" value = "${param.line}"/>
-</c:if>
-<c:if test = "${empty param.column}">
-	<c:set var="column" value = "40"/>
-</c:if>
-<c:if test = "${not empty param.column}">
-	<c:set var="column" value = "${param.column}"/>
-</c:if>
 <table>
 	<tbody>
-		<c:forEach var="i" begin="0" end="${line - 1}">
+		<c:forEach var="i" begin="0" end="${20 - 1}">
 			<tr>
-				<c:forEach var="j" begin="0" end="${column - 1}">
+				<c:forEach var="j" begin="0" end="${40 - 1}">
 					<jsp:useBean id="a" class="util.Alpha"/>
 					<td style="color : ${a.fg}; background: ${a.bg};">${a.ch}</td>
 					<c:remove var="a"/>
